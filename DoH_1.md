@@ -1,4 +1,3 @@
-<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/c1ef1cfe-1897-457d-be28-0c57c8e9b005" />
 
 # 🔒 Полное руководство по защите от утечек DNS и WebRTC
 
