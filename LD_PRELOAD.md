@@ -144,6 +144,63 @@ LD_PRELOAD=./stealth_memset.so ./test_original
 > «Я заставил любую программу сливать логи своих подключений, перехватив вызов connect() из libc с помощью LD_PRELOAD.
 Программа даже не узнала, что я вижу все IP-адреса, к которым она подключается.»
 
+**Компиляция и запуск для перехвата `connect`:**
+
+### 1. Создай файл `hack.c`:
+```c
+#define _GNU_SOURCE
+#include <dlfcn.h>
+#include <sys/socket.h>
+#include <stdio.h>
+#include <string.h>
+#include <arpa/inet.h>
+
+static int (*original_connect)(int, const struct sockaddr *, socklen_t) = NULL;
+
+int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen)
+{
+    if (!original_connect)
+    {
+        original_connect = dlsym(RTLD_NEXT, "connect");
+    }
+
+    char ip_str[INET_ADDRSTRLEN];
+    struct sockaddr_in *addr_in = (struct sockaddr_in *)addr;
+
+    inet_ntop(AF_INET, &addr_in->sin_addr, ip_str, INET_ADDRSTRLEN);
+    printf("[EVIL LOG] Попытка подключения к %s:%d\n", ip_str, ntohs(addr_in->sin_port));
+
+    if (strcmp(ip_str, "192.168.1.1") == 0)
+    {
+        printf("[EVIL BLOCK] Подключение к 192.168.1.1 заблокировано!\n");
+        return -1;
+    }
+
+    return original_connect(sockfd, addr, addrlen);
+}
+```
+
+### 2. Компилируй в библиотеку:
+```bash
+gcc -shared -fPIC -o hack.so hack.c -ldl
+```
+
+### 3. Запусти атаку на примере `ping`:
+```bash
+LD_PRELOAD=./hack.so ping -c 1 google.com
+```
+
+### 4. Результат:
+В консоли увидишь:
+```
+[HACK] Подключение к 142.251.49.46:53
+PING google.com (142.251.49.46) 56(84) bytes of data.
+...
+```
+
+**Важно:**  
+- Работает для любых программ, использующих `connect` из `libc`.  
+- Для `ping` это будет DNS-запрос (порт 53), а не сам ICMP-трафик.  
 
 ## ♦️  Но это только часть, продолжение будет в тгк - https://t.me/dima853_code
 
