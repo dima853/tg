@@ -126,7 +126,6 @@ LD_PRELOAD=./stealth_memset.so ./test_original
 Буфер очищен? : Да
 ```
 
-
 ---
 ## Еще пример с connect:
 
