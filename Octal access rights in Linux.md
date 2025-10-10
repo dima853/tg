@@ -1,4 +1,3 @@
-```markdown
 ### **🛡️ OCTAL PERMISSIONS IN LINUX: THE COMPLETE GUIDE**
 *If you find any inaccuracies, please report them in the Issues section.
 
