@@ -1,6 +1,15 @@
 ### **🛡️ OCTAL PERMISSIONS IN LINUX: THE COMPLETE GUIDE**
 *If you find any inaccuracies, please report them in the Issues section.
 
+**IMPORTANT:**
+
+```
+Bash: chmod 755 ← without zero
+C: chmod(path, 0755) ← with zero!
+```
+
+**RULE:** In the C code, we put `0` before the rights, but not in the terminal.
+
 ### **PART 1: BASICS — THE THREE PILLARS OF POWER**
 
 In the Linux world, every file and directory has three key entities that determine its fate:
