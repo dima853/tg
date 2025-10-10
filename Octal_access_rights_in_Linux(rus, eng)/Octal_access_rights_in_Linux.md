@@ -8,7 +8,7 @@ Bash: chmod 755 ← without zero
 C: chmod(path, 0755) ← with zero!
 ```
 
-**RULE:** In the C code, we put `0` before the rights, but not in the terminal.
+**RULE:** In the C (Programming Language) code, we put `0` before the rights, but not in the terminal.
 
 ### **PART 1: BASICS — THE THREE PILLARS OF POWER**
 
