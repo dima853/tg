@@ -1005,10 +1005,6 @@ CONCLUSION: The first digit in four-digit notation is an **additional "operating
 *   **Conclusion:** `chmod 0xxx` resets all special bits.
 ---
 
-Let's go! 🚀 Let's tackle the remaining 50 questions with the same detail and practice.
-
----
-
 ### **51. What security risks are associated with setuid?**
 
 *   **Explanation:** setuid is a mega-weapon. If a setuid program has a vulnerability (buffer overflow, injection), an attacker can execute arbitrary code with the file owner's privileges (often root). This is a complete system compromise.
